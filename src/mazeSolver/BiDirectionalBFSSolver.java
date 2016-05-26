@@ -55,9 +55,14 @@ public class BiDirectionalBFSSolver implements MazeSolver {
 				}
 				setCellVisited(ch, HEAD);
 				for(int i=0; i<NUM_DIR; i++) {
+					if(ch.wall[i] == null) continue;
 					if(ch.wall[i].present) continue;
 					Cell ne = ch.neigh[i];
 					if(!isCellVisited(ne, HEAD)) {
+						if (ne.tunnelTo != null) {
+							setCellVisited(ne, HEAD);
+							ne = ne.tunnelTo;
+						}
 						headSet.add(ne);
 
 					}
@@ -72,9 +77,14 @@ public class BiDirectionalBFSSolver implements MazeSolver {
 				}
 				setCellVisited(ct, TAIL);
 				for(int i=0; i<NUM_DIR; i++) {
+					if(ch.wall[i] == null) continue;
 					if(ct.wall[i].present) continue;
 					Cell ne = ct.neigh[i];
 					if(!isCellVisited(ne, TAIL)) {
+						if (ne.tunnelTo != null) {
+							setCellVisited(ne, TAIL);
+							ne = ne.tunnelTo;
+						}
 						tailSet.add(ne);
 					}
 				}

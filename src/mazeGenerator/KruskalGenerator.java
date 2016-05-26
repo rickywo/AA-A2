@@ -30,7 +30,11 @@ public class KruskalGenerator implements MazeGenerator {
 				cells.add(current);
 				for(int k = 0; k < 3; k ++) {
 					Cell ne = current.neigh[k];
+
 					if(isIn(ne)) {
+						if (ne.tunnelTo != null) {
+							ne = ne.tunnelTo;
+						}
 						edges.add(new Path(current, ne));
 					}
 				}
@@ -48,7 +52,9 @@ public class KruskalGenerator implements MazeGenerator {
         /* Vertices v and u are not in the same component */
 
 				for(int k = 0; k < NUM_DIR; k ++) {
-					if(u.neigh[k] == v) {
+					Cell ne = u.neigh[k];
+					if(!isIn(ne)) continue;
+					if(ne == v || ne == v.tunnelTo) {
 						u.wall[k].present = false;
 					}
 				}
@@ -126,6 +132,13 @@ public class KruskalGenerator implements MazeGenerator {
 			for(Cell c: cells) {
 				makeSet(c);
 			}
+			// Union Tunnel cells
+			for(Cell c: cells) {
+				Cell linkedCell = c.tunnelTo;
+				if(linkedCell!=null && find(c) != find(linkedCell)) {
+						union(c, linkedCell);
+				}
+			}
 		}
 
 		private void makeSet(Cell c) {
@@ -144,7 +157,6 @@ public class KruskalGenerator implements MazeGenerator {
 		}
 
 		public Node find(Cell c) {
-			//Node current = this.roots.get(id);
 			Map<Integer, Node> mapC = mapR.get(c.r);
 			Node current = mapC.get(c.c);
 			while (current.parent != null)

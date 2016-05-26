@@ -53,6 +53,11 @@ public class RecursiveBacktrackerSolver implements MazeSolver {
 	private void walkThrough(Cell cell) {
 
 		setCellVisited(cell);
+		if (cell.tunnelTo != null) {
+			cell = cell.tunnelTo;
+			setCellVisited(cell);
+		}
+
 		int dir = randomlyChoseNeighbor(cell);
 		Cell neigh;
 		while (dir != -1) {

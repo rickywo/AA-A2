@@ -11,21 +11,17 @@ import java.util.*;
 import static maze.Maze.*;
 
 /**
- * The Class KruskalGenerator:
- * This generator is based on Kruskal’s algorithm for computing minimum spanning trees 
- * (hence the name of this generator). Starting with a maze where all walls are present, 
- * i.e., between every cell is a wall, it uses the following procedure to 
- * generate a maze: 
- * 1. For each pair of adjacent cells, construct an edge that links these two cells. 
- *    Put all possible edges into a set. Maintain a set of trees. 
- *    Initially this set of trees contains a set of singleton tree, 
- *    where each tree has one of the cells (its index) as it only vertex.
- * 2. Select a random edge in the set. If the edge joins two disjoint trees in 
- *    the tree set, join the trees. 
- *    If not, disgard the edge. When a selected edge joins two trees, 
- *    carve a path between the two corresponding cells. 
- * 3. Repeat step 2 until the set of edges is empty. When this occurs, 
- *    then the maze will be a perfect one.
+ * This generator is based on Kruskal’s algorithm for computing minimum spanning trees (hence the
+ * name of this generator). Starting with a maze where all walls are present, i.e., between every cell is a
+ * wall, it uses the following procedure to generate a maze:
+ * 1. For each pair of adjacent cells, construct an edge that links these two cells. Put all possible
+ * edges into a set. Maintain a set of trees. Initially this set of trees contains a set of singleton
+ * tree, where each tree has one of the cells (its index) as it only vertex.
+ * 2. Select a random edge in the set. If the edge joins two disjoint trees in the tree set, join the trees.
+ * If not, disgard the edge. When a selected edge joins two trees, carve a path between the two
+ * corresponding cells.
+ * 3. Repeat step 2 until the set of edges is empty. When this occurs, then the maze will be a perfect
+ * one.
  */
 public class KruskalGenerator implements MazeGenerator {
 
@@ -259,7 +255,7 @@ public class KruskalGenerator implements MazeGenerator {
 		/**
 		 * Find the root node of a set of a passed in cell
 		 *
-		 * @param c the c
+		 * @param c the cell
 		 * @return the node
 		 */
 		public Node find(Cell c) {
@@ -276,8 +272,8 @@ public class KruskalGenerator implements MazeGenerator {
 		 * Union. To join 2 sets, attaches small tree to a
 		 * taller tree with more nodes it has.
 		 *
-		 * @param a the a
-		 * @param b the b
+		 * @param a the cell a
+		 * @param b the cell b
 		 */
 		public void union(Cell a, Cell b) {
 			Node aTreeRoot = find(a);
